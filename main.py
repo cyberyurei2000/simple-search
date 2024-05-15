@@ -1,4 +1,4 @@
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtWidgets
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QMessageBox
 import sys
 import search
@@ -99,8 +99,7 @@ class MainWindow(QMainWindow):
         dt_run = QtWidgets.QPushButton("Run")
         dt_limit.setValue(20)
         dt_run.clicked.connect(lambda: self.search_run(
-            self.directory, f"{dt_date.text()} {dt_time.text()}", "date",
-            dt_limit.text()))
+            self.directory, f"{dt_date.text()} {dt_time.text()}", "date", dt_limit.text()))
         layout3.addWidget(dt_dlabel)
         layout3.addWidget(dt_date)
         layout3.addWidget(dt_tlabel)
@@ -161,7 +160,7 @@ class MainWindow(QMainWindow):
         statusbar.addWidget(self.status_label)
         self.setStatusBar(statusbar)
 
-    def open_directory(self):
+    def open_directory(self) -> None:
         self.console.clear()
         self.directory = f"{QtWidgets.QFileDialog.getExistingDirectory()}/"
         self.status_label.setText(self.directory)
@@ -172,14 +171,14 @@ class MainWindow(QMainWindow):
         self.tab4.setDisabled(False)
         self.tab5.setDisabled(False)
 
-    def search_run(self, path, user, type, limit):
+    def search_run(self, path: str, user: str, type: str, limit: str) -> None:
         self.console.clear()
         if user:
             search.run(path, user, type, limit)
             #self.console.setPlainText(search.get_results())
             self.console.addItems(search.get_results())
 
-    def show_about(self):
+    def show_about(self) -> None:
         text = ("Search Tool\n" + "Developed by cyberyurei2000")
 
         about = QMessageBox(self)
@@ -188,8 +187,12 @@ class MainWindow(QMainWindow):
         about.exec()
 
 
-if __name__ == "__main__":
+def main():
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
     app.exec()
+
+
+if __name__ == "__main__":
+    main()

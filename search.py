@@ -2,23 +2,35 @@ from threading import Thread
 from glob import glob
 import os, time
 
-
 results = []
 limit = 0
-def run(path, user, type, max_limit):
+
+
+def run(path: str, user: str, type: str, max_limit: str | int) -> None:
     global limit
     os.chdir(path)
     if limit < int(max_limit):
         if len(is_subdir(path)) != 0:
             task(path, user, type, int(max_limit), False)
             for folder in next(os.walk(path))[1]:
-                th = Thread(target=task, args=(f"{path}{folder}/", user, type, int(max_limit), ))
+                th = Thread(target=task,
+                            args=(
+                                f"{path}{folder}/",
+                                user,
+                                type,
+                                int(max_limit),
+                            ))
                 th.start()
                 th.join()
         else:
             task(path, user, type, int(max_limit))
 
-def task(path, user, type, max_limit, multiple=True):
+
+def task(path: str,
+         user: str,
+         type: str,
+         max_limit: str | int,
+         multiple=True) -> None:
     global limit
     os.chdir(path)
 
@@ -71,17 +83,20 @@ def task(path, user, type, max_limit, multiple=True):
             if len(is_subdir(path)) != 0:
                 run(path, user, type, int(max_limit))
 
-def is_subdir(path):
+
+def is_subdir(path) -> list[str]:
     os.chdir(path)
     return next(os.walk('.'))[1]
 
-def get_results():
+
+def get_results() -> list[str]:
     #string = "".join([f"{str(item)}\n" for item in results])
     string = [str(item) for item in results]
     reset()
     return string
 
-def reset():
+
+def reset() -> None:
     global limit
     limit = 0
     results.clear()
