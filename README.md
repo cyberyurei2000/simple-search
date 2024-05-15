@@ -4,9 +4,6 @@ A simple search tool for my college project.
 
 ![screenshot](./docs/screenshot.png)
 
-[![Python](https://img.shields.io/badge/Made%20with-Python-blue)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-red)](./LICENSE)
-
 ### Requirements
 
 * [Python](https://www.python.org/) >= 3.10
